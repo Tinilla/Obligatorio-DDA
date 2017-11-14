@@ -9,7 +9,7 @@ package Servicios;
  *
  * @author Equipo
  */
-public interface IABM<T> {
+public interface IABM<T> extends IBuscarListar<T> {
     boolean alta(T objeto);
     boolean baja (int id);
     boolean modificar(T objeto);

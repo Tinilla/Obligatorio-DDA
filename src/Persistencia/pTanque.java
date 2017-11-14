@@ -4,16 +4,19 @@
  * and open the template in the editor.
  */
 package Persistencia;
+import Dominio.Categoria;
 import Dominio.Tanque;
 import Servicios.IABM;
 import Servicios.IBuscarListar;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  * @author Equipo
  */
-public class pTanque extends MySql implements IABM<Tanque>, IBuscarListar<Tanque>{
+public class pTanque extends MySql implements IABM<Tanque>{
 
     @Override
     public boolean alta(Tanque objeto) {
@@ -38,13 +41,36 @@ public class pTanque extends MySql implements IABM<Tanque>, IBuscarListar<Tanque
 
     @Override
     public List<Tanque> listar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<Tanque> tanques = new ArrayList<>();
+        strSQL = "SELECT * FROM `tanque` WHERE `estado` = 1";
+        seleccionar();
+        try{
+            while(this.rs.next()){
+                Tanque elTanque = new Tanque(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), new Categoria(rs.getInt(5)));
+                tanques.add(elTanque);
+            }
+            rs.close();
+        }
+        catch(SQLException e){
+            e.getMessage();
+        }
+        return tanques;
     }
 
     @Override
     public Tanque buscar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Tanque elTanque = null;
+        strSQL = "SELECT * FROM `tanque` WHERE `id` = "+ id;
+        seleccionar();
+        try{
+            while(this.rs.next()){
+                elTanque = new Tanque(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), new Categoria(rs.getInt(5)));
+            }
+            rs.close();
+        }
+        catch(SQLException e){
+            e.getMessage();
+        }
+        return elTanque;
     }
-//id, idCategoriaLeche, numero, volumen, stock
-   
 }

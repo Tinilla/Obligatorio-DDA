@@ -56,5 +56,24 @@ public class Tanque {
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
+
+    public Tanque(Integer id) {
+        this.id = id;
+    }
+    
+    public Tanque(Integer numero, Integer volumen, Integer stock, Categoria categoria) {
+        this.numero = numero;
+        this.volumen = volumen;
+        this.stock = stock;
+        this.categoria = categoria;
+    }
+
+    public Tanque(Integer id, Integer numero, Integer volumen, Integer stock, Categoria categoria) {
+        this.id = id;
+        this.numero = numero;
+        this.volumen = volumen;
+        this.stock = stock;
+        this.categoria = categoria;
+    }
     
 }
