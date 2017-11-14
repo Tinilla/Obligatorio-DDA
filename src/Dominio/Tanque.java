@@ -13,8 +13,18 @@ public class Tanque {
     private Integer id;
     private Integer numero;
     private Integer volumen;
-    private Categoria categoria;
+    private Integer stock;
+    
+    public Integer getStock() {
+        return stock;
+    }
 
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
+    
+    private Categoria categoria;
+    
     public Integer getId() {
         return id;
     }
