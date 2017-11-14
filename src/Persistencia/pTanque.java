@@ -7,7 +7,6 @@ package Persistencia;
 import Dominio.Categoria;
 import Dominio.Tanque;
 import Servicios.IABM;
-import Servicios.IBuscarListar;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,20 +40,7 @@ public class pTanque extends MySql implements IABM<Tanque>{
 
     @Override
     public List<Tanque> listar() {
-        ArrayList<Tanque> tanques = new ArrayList<>();
-        strSQL = "SELECT * FROM `tanque` WHERE `estado` = 1";
-        seleccionar();
-        try{
-            while(this.rs.next()){
-                Tanque elTanque = new Tanque(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), new Categoria(rs.getInt(5)));
-                tanques.add(elTanque);
-            }
-            rs.close();
-        }
-        catch(SQLException e){
-            e.getMessage();
-        }
-        return tanques;
+        
     }
 
     @Override

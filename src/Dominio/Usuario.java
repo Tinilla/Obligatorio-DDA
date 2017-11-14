@@ -11,7 +11,7 @@ package Dominio;
  */
 public class Usuario {
     private int id;
-    private int nombreUsuario;
+    private String nombreUsuario;
     private String contrasena;
     private TipoUsuario tipo;
 
@@ -23,11 +23,11 @@ public class Usuario {
         this.id = id;
     }
 
-    public int getNombreUsuario() {
+    public String getNombreUsuario() {
         return nombreUsuario;
     }
 
-    public void setNombreUsuario(int nombreUsuario) {
+    public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
     }
 
@@ -47,14 +47,14 @@ public class Usuario {
         this.tipo = tipo;
     }
 
-    public Usuario(int id, int nombreUsuario, String contrasena, TipoUsuario tipo) {
+    public Usuario(int id, String nombreUsuario, String contrasena, TipoUsuario tipo) {
         this.id = id;
         this.nombreUsuario = nombreUsuario;
         this.contrasena = contrasena;
         this.tipo = tipo;
     }
 
-    public Usuario(int nombreUsuario, String contrasena, TipoUsuario tipo) {
+    public Usuario(String nombreUsuario, String contrasena, TipoUsuario tipo) {
         this.nombreUsuario = nombreUsuario;
         this.contrasena = contrasena;
         this.tipo = tipo;

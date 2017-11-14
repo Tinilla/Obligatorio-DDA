@@ -14,6 +14,7 @@ public class Tanque {
     private Integer numero;
     private Integer volumen;
     private Integer stock;
+    private Categoria categoria;
     
     public Integer getStock() {
         return stock;
@@ -22,8 +23,6 @@ public class Tanque {
     public void setStock(Integer stock) {
         this.stock = stock;
     }
-    
-    private Categoria categoria;
     
     public Integer getId() {
         return id;
@@ -76,4 +75,21 @@ public class Tanque {
         this.categoria = categoria;
     }
     
+    public int calcularCosto(int costoNeto){
+        ICalculoPrecio calculo = null;
+        switch(categoria.getNombre()){
+            case "A":
+                calculo = CalculoPrecioA.getInstancia();
+                break;
+            case "B": 
+                calculo = new CalculoPrecioB();
+                break;
+            case "C":
+                calculo = new CalculoPrecioC();
+                break;
+            default: 
+                return 0;
+        }
+        return calculo.calcularPrecioLeche(costoNeto);
+    }
 }
