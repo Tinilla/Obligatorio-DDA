@@ -1,4 +1,4 @@
-/*
+|/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -22,15 +22,15 @@ public class MySql {
         st = Conexion.getInstancia().getStatement();
     }
 
-    public void seleccionar(String filtro) {
+    public void seleccionar() {
         try {
-            rs = st.executeQuery(filtro);
+            rs = st.executeQuery(strSQL);
         } catch (SQLException ex) {
             System.err.println("SQLException: " + ex.getMessage());
         }
     }
 
-    public void update(String strSQL) {
+    public void update() {
         try {
             System.out.println(strSQL);
             st.executeUpdate(strSQL);
