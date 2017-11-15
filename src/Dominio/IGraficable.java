@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servicios;
+package Dominio;
 
 /**
  *
  * @author Equipo
  */
-public interface IABM<T> extends IBuscarListar<T> {
-    boolean alta(T objeto);
-    boolean baja (int id);
-    boolean modificar(T objeto);
+public interface IGraficable {
+    
 }

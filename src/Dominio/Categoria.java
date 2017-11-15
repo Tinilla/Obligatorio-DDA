@@ -37,5 +37,15 @@ public class Categoria {
     public void setCosto(Integer costo) {
         this.costo = costo;
     }
+
+    public Categoria(Integer id) {
+        this.id = id;
+    }
+
+    public Categoria(Integer id, String nombre, Integer costo) {
+        this.id = id;
+        this.nombre = nombre;
+        this.costo = costo;
+    }
     
 }
