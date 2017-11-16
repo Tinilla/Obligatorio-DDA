@@ -92,6 +92,7 @@ public class pUsuario extends MySql implements IABM<Usuario>, IUsuario{
         catch(SQLException e){
             e.getMessage();
         }
+        return true;
     }
     
 }

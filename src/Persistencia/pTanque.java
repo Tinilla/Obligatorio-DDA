@@ -40,7 +40,8 @@ public class pTanque extends MySql implements IABM<Tanque>{
 
     @Override
     public List<Tanque> listar() {
-        
+        ArrayList<Tanque> listaTanques = new ArrayList();
+        return listaTanques;
     }
 
     @Override
