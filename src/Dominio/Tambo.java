@@ -47,7 +47,7 @@ public class Tambo {
     }
     
     public boolean verificarUsuario(Usuario elUsuario){
-        return true;
+        return persistencia.verificarUsuario(elUsuario);
     }
     
     public void altaTanque(Tanque elTanque){

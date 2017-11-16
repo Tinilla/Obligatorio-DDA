@@ -77,22 +77,23 @@ public class pUsuario extends MySql implements IABM<Usuario>, IUsuario{
 
     @Override
     public boolean verificar(Usuario elUsuario) {
-        Usuario usuarioEncontrado = null;
-        strSQL = "SELECT * FROM `usuario` WHERE `nombreUsuario` = " + elUsuario.getNombreUsuario();
+        boolean encontrado = false;
+        strSQL = "SELECT * FROM `usuario` WHERE `nombreUsuario` = '" + elUsuario.getNombreUsuario() + "' AND `contrasena` = '"+elUsuario.getContrasena()+"'";
         seleccionar();
         try{
             while(this.rs.next()){
-                usuarioEncontrado = new Usuario(rs.getInt(1), rs.getString(2), rs.getString(3), new TipoUsuario(rs.getInt(4)));
-                /*elUsuario.setContrasena("");
+                //usuarioEncontrado = new Usuario(rs.getInt(1), rs.getString(2), rs.getString(3), new TipoUsuario(rs.getInt(4)));
+                elUsuario.setContrasena("");
                 elUsuario.setTipo(new TipoUsuario(rs.getInt(4)));
-                elUsuario.setId(rs.getInt(1));*/
+                elUsuario.setId(rs.getInt(1));
+                encontrado = true;
             }
             rs.close();
         }
         catch(SQLException e){
             e.getMessage();
         }
-        return true;
+        return encontrado;
     }
     
 }

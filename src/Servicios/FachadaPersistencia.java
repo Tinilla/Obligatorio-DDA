@@ -64,7 +64,10 @@ public class FachadaPersistencia {
     }
     
     public boolean verificarUsuario(Usuario elUsuario){
-        return usuario.verificar(elUsuario);
+        if(usuario.verificar(elUsuario)){
+            elUsuario.setTipo(tipoUsuarioBL.buscar(elUsuario.getTipo().getId()));
+        }
+        return elUsuario != null;
     }
     
     public void altaTanque(Tanque elTanque){
