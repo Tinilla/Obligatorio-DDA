@@ -46,6 +46,10 @@ public class Tambo {
         return persistencia.buscarUsuario(idUsuario);
     }
     
+    public boolean verificarUsuario(Usuario elUsuario){
+        return true;
+    }
+    
     public void altaTanque(Tanque elTanque){
         persistencia.altaTanque(elTanque);
     }

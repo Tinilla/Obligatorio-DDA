@@ -6,8 +6,10 @@
 package Servicios;
 
 import Dominio.Tanque;
+import Dominio.TipoUsuario;
 import Dominio.Usuario;
 import Persistencia.pTanque;
+import Persistencia.pTipoUsuario;
 import Persistencia.pUsuario;
 import java.util.List;
 
@@ -19,11 +21,17 @@ public class FachadaPersistencia {
     private static IABM<Tanque> tanqueABM;
     private static IABM<Usuario> usuarioABM;
     
+    private static IBuscarListar<TipoUsuario> tipoUsuarioBL;
+    
+    private static IUsuario usuario;
+    
     private static FachadaPersistencia instancia;
     
     private FachadaPersistencia() {
         tanqueABM = new pTanque();
         usuarioABM = new pUsuario();
+        tipoUsuarioBL = new pTipoUsuario();
+        usuario = new pUsuario();
     }
     
     public static FachadaPersistencia getInstancia(){
@@ -50,7 +58,13 @@ public class FachadaPersistencia {
     }
     
     public Usuario buscarUsuario(int idUsuario){
-        return usuarioABM.buscar(idUsuario);
+        Usuario elUsuario = usuarioABM.buscar(idUsuario);
+        elUsuario.setTipo(tipoUsuarioBL.buscar(elUsuario.getTipo().getId()));
+        return elUsuario;
+    }
+    
+    public boolean verificarUsuario(Usuario elUsuario){
+        return usuario.verificar(elUsuario);
     }
     
     public void altaTanque(Tanque elTanque){

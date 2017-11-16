@@ -5,6 +5,8 @@
  */
 package obligatoriodda;
 
+import Presentacion.Login;
+
 /**
  *
  * @author Negro
@@ -15,7 +17,8 @@ public class ObligatorioDDA {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Login ventana = Login.getInstancia();
+        ventana.setVisible(true);
     }
     
 }

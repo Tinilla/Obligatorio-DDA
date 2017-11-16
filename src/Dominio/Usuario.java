@@ -46,7 +46,12 @@ public class Usuario {
     public void setTipo(TipoUsuario tipo) {
         this.tipo = tipo;
     }
-
+    
+    public Usuario (String nombreUsuario, String contrasena){
+        this.nombreUsuario = nombreUsuario;
+        this.contrasena = contrasena;
+    }
+    
     public Usuario(int id, String nombreUsuario, String contrasena, TipoUsuario tipo) {
         this.id = id;
         this.nombreUsuario = nombreUsuario;
@@ -60,5 +65,16 @@ public class Usuario {
         this.tipo = tipo;
     }
     
+    public boolean esAdmin(){
+        return tipo.getNombre().equals("Administrador");
+    }
+    
+    public boolean esMaster(){
+        return tipo.getNombre().equals("Master");
+    }
+    
+    public boolean esEncargado(){
+        return tipo.getNombre().equals("Encargado de planta");
+    }
     
 }
