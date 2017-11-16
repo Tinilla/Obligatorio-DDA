@@ -7,7 +7,11 @@ package Persistencia;
 
 import Dominio.Cliente;
 import Servicios.*;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -37,13 +41,40 @@ public class pCliente extends MySql implements IABM<Cliente>, IBuscarListar<Clie
     }
 
     @Override
-    public List<Cliente> listar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Cliente> listar(){
+        ArrayList<Cliente> listaClientes = new ArrayList<>();
+        strSQL = "SELCT nombre, razonSocial, rut FROM cliente ";
+        seleccionar();
+        Cliente cliente;
+        try {
+            while(rs.next()){
+                cliente = new Cliente(); 
+                cliente.setNombre(rs.getString("nombre"));
+                cliente.setNombre(rs.getString("razonSocial"));
+                cliente.setNombre(rs.getString("rut"));
+                listaClientes.add(cliente);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return listaClientes;
     }
 
     @Override
     public Cliente buscar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Cliente cliente = new Cliente();
+        strSQL = "SELECT nombre, razonSocial, ruta FROM cliente WHERE cliente.id = " + id;
+        seleccionar();
+        try {
+            if(rs.next()){
+                cliente.setNombre(rs.getString("nombre"));
+                cliente.setNombre(rs.getString("razonSocial"));
+                cliente.setNombre(rs.getString("rut"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return cliente;
     }
 
    
