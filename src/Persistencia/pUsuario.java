@@ -8,6 +8,7 @@ package Persistencia;
 import Dominio.TipoUsuario;
 import Dominio.Usuario;
 import Servicios.IABM;
+import Servicios.IUsuario;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
  *
  * @author Equipo
  */
-public class pUsuario extends MySql implements IABM<Usuario>{
+public class pUsuario extends MySql implements IABM<Usuario>, IUsuario{
 
     @Override
     public boolean alta(Usuario objeto) {
@@ -42,7 +43,7 @@ public class pUsuario extends MySql implements IABM<Usuario>{
     @Override
     public List<Usuario> listar() {
         ArrayList<Usuario> usuarios = new ArrayList<>();
-        strSQL = "SELECT * FROM `tanque` WHERE `estado` = 1";
+        strSQL = "SELECT * FROM `usuario` WHERE `estado` = 1";
         seleccionar();
         try{
             while(this.rs.next()){
@@ -60,7 +61,7 @@ public class pUsuario extends MySql implements IABM<Usuario>{
     @Override
     public Usuario buscar(int id) {
         Usuario elUsuario = null;
-        strSQL = "SELECT * FROM `tanque` WHERE `id` = " + id;
+        strSQL = "SELECT * FROM `usuario` WHERE `id` = " + id;
         seleccionar();
         try{
             while(this.rs.next()){
@@ -72,6 +73,25 @@ public class pUsuario extends MySql implements IABM<Usuario>{
             e.getMessage();
         }
         return elUsuario;
+    }
+
+    @Override
+    public boolean verificar(Usuario elUsuario) {
+        Usuario usuarioEncontrado = null;
+        strSQL = "SELECT * FROM `usuario` WHERE `nombreUsuario` = " + elUsuario.getNombreUsuario();
+        seleccionar();
+        try{
+            while(this.rs.next()){
+                usuarioEncontrado = new Usuario(rs.getInt(1), rs.getString(2), rs.getString(3), new TipoUsuario(rs.getInt(4)));
+                /*elUsuario.setContrasena("");
+                elUsuario.setTipo(new TipoUsuario(rs.getInt(4)));
+                elUsuario.setId(rs.getInt(1));*/
+            }
+            rs.close();
+        }
+        catch(SQLException e){
+            e.getMessage();
+        }
     }
     
 }
