@@ -102,4 +102,20 @@ public class FachadaPersistencia {
     public List<TipoUsuario> listarTiposUsuario(String criterio){
         return tipoUsuarioBL.listar();
     }
+    
+    public List<Ciudad> listarCiudades(){
+        return ciudadABM.listar();
+    }
+    
+    public void altaCliente(Cliente elCliente){
+        clienteABM.alta(elCliente);
+    }
+    
+    public void modificarCliente(Cliente elCliente){
+        clienteABM.modificar(elCliente);
+    }
+    
+    public void bajaCliente(int idCliente){
+        clienteABM.baja(idCliente);
+    }
 }
