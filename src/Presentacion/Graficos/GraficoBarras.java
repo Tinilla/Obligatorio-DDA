@@ -4,10 +4,10 @@
  * and open the template in the editor.
  */
 package Presentacion.Graficos;
+
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
-import java.sql.ResultSet;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -20,27 +20,15 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-/**
- *
- * @author Equipo
- */
-public class GraficoBarras extends JFrame{
-    
-    private static final long serialVersionUID = 1L;
-    
-    public GraficoBarras(String tituloAplicacion, String tituloGrafico){
-    super(tituloAplicacion);
-    //crea conjunto de datos
-    DefaultCategoryDataset dataset = createDataset();
+public class GraficoBarras extends JFrame  {
 
-    JFreeChart chart = createChart(dataset, chartTitle);
-  // Ponemos el gráfico en un panel
-    ChartPanel chartPanel = new ChartPanel(chart);
-  // Dejamos el tamaño por defecto
-    chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
-  // Lo añadimos a nuestra aplicación (PieChart)
-    setContentPane(chartPanel);
-    }
+
+ private static final long serialVersionUID = 1L;
+
+ public GraficoBarras(String applicationTitle, String chartTitle) {
+   
+  super(applicationTitle);
+
   // Creamos el conjunto de datos con las votaciones
   DefaultCategoryDataset dataset = createDataset();
 
@@ -52,21 +40,16 @@ public class GraficoBarras extends JFrame{
   // Lo añadimos a nuestra aplicación (PieChart)
   setContentPane(chartPanel);
 
-    private DefaultCategoryDataset crearSetDatos(ResultSet datosRecibidos) {
-        DefaultCategoryDataset datos = new DefaultCategoryDataset();
-        datos.setValue(WIDTH, NORMAL, NORMAL);
-        
-        try{
-            while(datosRecibidos.next()){
-                datos
-            }
-            rs.close();
-        }
-        catch(SQLException e){
-            e.getMessage();
-        }
-        return tanques;
-   /*result.setValue(154, "PP", "2008");
+ }
+
+ /**
+  * Creates a sample dataset
+  */
+
+ private DefaultCategoryDataset createDataset() {
+  DefaultCategoryDataset result = new DefaultCategoryDataset();
+ 
+   result.setValue(154, "PP", "2008");
   result.setValue(169, "PSOE", "2008");
   result.setValue(10, "CIU", "2008");
   result.setValue(2, "IU-LV", "2008");
@@ -97,12 +80,29 @@ public class GraficoBarras extends JFrame{
   result.setValue(6, "EAJ-PNV", "2012");
   result.setValue(43, "ERC", "2012");
   result.setValue(21, "BNG", "2012");
-*/
+
 
 
  
-  return datos;
+  return result;
 
  }
-    
+
+ /**
+  * Creates a chart por andres2288
+  */
+
+ private JFreeChart createChart(DefaultCategoryDataset dataset, String title) {
+
+  JFreeChart chart = ChartFactory.createBarChart3D(title, "Partido",
+    "votos", dataset, // data
+    PlotOrientation.VERTICAL, true, // include legend
+    true, false);
+  CategoryPlot plot = (CategoryPlot) chart.getPlot();
+  CategoryAxis xAxis = (CategoryAxis) plot.getDomainAxis();
+  xAxis.setCategoryLabelPositions(CategoryLabelPositions.UP_45); // Inclinamos 45 grados las etiquetas del eje X
+  plot.setBackgroundAlpha(0.5f);
+  return chart;
+
+ }
 }

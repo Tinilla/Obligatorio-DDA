@@ -29,7 +29,6 @@ public class FachadaPersistencia {
     private static IABM<Cliente> clienteABM;
     private static IBuscarListar<Ciudad> ciudadABM;
     
-    
     private static IBuscarListar<Categoria> categoriaBL;   
     private static IBuscarListar<TipoUsuario> tipoUsuarioBL;
     

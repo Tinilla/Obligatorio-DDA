@@ -19,32 +19,32 @@ public class pCategoria extends MySql implements IBuscarListar<Categoria>{
 
     @Override
     public List<Categoria> listar() {
-        ArrayList<Categoria> listaCiudades = new ArrayList();
-        strSQL = "SELECT id, nombre FROM ciudad";
+        ArrayList<Categoria> categorias = new ArrayList();
+        strSQL = "SELECT * FROM `categoria`";
+        seleccionar();
         try {
             while(rs.next()){
-                Categoria categoria = new Categoria(rs.getInt("id"), rs.getString("nombre"));
-                listaCiudades.add(categoria);
+                categorias.add(new Categoria(rs.getInt(1), rs.getString(2), rs.getInt(3)));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return listaCiudades;
+        return categorias;
     }
 
     @Override
     public Categoria buscar(int id) {
-        Categoria ciudad = new Categoria();
-        strSQL = "SELECT nombre FROM categoria WHERE nombre = " + id;
+        Categoria laCategoria = null;
+        strSQL = "SELECT * FROM `categoria` WHERE `id` = " + id;
         seleccionar();
         try {
             if(rs.next()){
-                ciudad.setNombre(rs.getString("nombre"));
+                laCategoria = new Categoria(rs.getInt(1), rs.getString(2), rs.getInt(3));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return ciudad;
+        return laCategoria;
     }
 
     

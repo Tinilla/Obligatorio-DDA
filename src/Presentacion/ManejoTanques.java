@@ -38,6 +38,7 @@ public class ManejoTanques extends javax.swing.JFrame {
         initComponents();
         controladora = Tambo.getInstancia();
         cargarTabla();
+        cargarCategorias();
         lsmTanques = tblTanques.getSelectionModel();
         lsmTanques.addListSelectionListener(new ListenerTanque());
         tblTanques.setSelectionModel(lsmTanques);
@@ -109,7 +110,7 @@ public class ManejoTanques extends javax.swing.JFrame {
         txtVolumen = new javax.swing.JTextField();
         cbCategoria = new javax.swing.JComboBox();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         btnEliminar.setText("Eliminar");
         btnEliminar.setToolTipText("");

@@ -47,5 +47,9 @@ public class Categoria {
         this.nombre = nombre;
         this.costo = costo;
     }
+    @Override
+    public String toString(){
+        return this.nombre;
+    }
     
 }

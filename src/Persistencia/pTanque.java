@@ -40,8 +40,19 @@ public class pTanque extends MySql implements IABM<Tanque>{
 
     @Override
     public List<Tanque> listar() {
-        ArrayList<Tanque> listaTanques = new ArrayList();
-        return listaTanques;
+        ArrayList<Tanque> tanques = new ArrayList();
+        strSQL = "SELECT * FROM `tanque` WHERE `estado` = 1";
+        seleccionar();
+        try{
+            while(this.rs.next()){
+                tanques.add(new Tanque(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), new Categoria(rs.getInt(5))));
+            }
+            rs.close();
+        }
+        catch(SQLException e){
+            e.getMessage();
+        }
+        return tanques;
     }
 
     @Override

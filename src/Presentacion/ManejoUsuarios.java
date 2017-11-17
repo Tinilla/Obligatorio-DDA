@@ -13,6 +13,7 @@ import Presentacion.ModelosTbl.ModeloTblUsuario;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -110,6 +111,11 @@ public class ManejoUsuarios extends javax.swing.JFrame {
         this.txtContrasena.setText(usuarioSeleccionado.getNombreUsuario());
         this.cbTipoUsuario.setSelectedItem(ABORT); //ELEGIR EL TIPO
     }
+    private void quitarSeleccion(){
+        usuarioSeleccionado = null;
+        btnEliminar.setEnabled(false);
+        btnModificar.setEnabled(false);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -169,6 +175,11 @@ public class ManejoUsuarios extends javax.swing.JFrame {
 
         btnModificar.setText("Modificar");
         btnModificar.setEnabled(false);
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         rbgTipoMostrar.add(rbAdministradores);
         rbAdministradores.setText("Administradores");
@@ -282,9 +293,14 @@ public class ManejoUsuarios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+        int opcion = JOptionPane.showConfirmDialog(null, "¿Seguro de que desea elimnar?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+        if(opcion == JOptionPane.YES_OPTION){
+            controladora.bajaUsuario(usuarioSeleccionado.getId());
+            quitarSeleccion();
+            cargarTabla();
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
-
+    
     private void rbAdministradoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbAdministradoresActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rbAdministradoresActionPerformed
@@ -295,13 +311,33 @@ public class ManejoUsuarios extends javax.swing.JFrame {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         if(!faltanDatos()){
-            String nombre = txtNombreUsuario.getText();
-            String contrasena = txtContrasena.getText();
-            TipoUsuario tipoUsuario = ((ModeloCbTipoUsuario)cbTipoUsuario.getModel()).getElementAt(cbTipoUsuario.getSelectedIndex());
-            Usuario elUsuario = new Usuario(nombre, contrasena, tipoUsuario);
+            Usuario elUsuario = levantarUsuario();
+            controladora.altaUsuario(elUsuario);
+            limpiarCampos();
+            cargarTabla();
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        if(!faltanDatos()){
+            int opcion = JOptionPane.showConfirmDialog(null, "¿Seguro de que desea modificar?", "Confirmar modificación", JOptionPane.YES_NO_OPTION);
+                if(opcion == JOptionPane.YES_OPTION){
+                Usuario elUsuario = levantarUsuario();
+                elUsuario.setId(usuarioSeleccionado.getId());
+                controladora.modificarUsuario(elUsuario);
+                limpiarCampos();
+                quitarSeleccion();
+                cargarTabla();
+            }
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
+    
+    private Usuario levantarUsuario(){
+            String nombre = txtNombreUsuario.getText();
+            String contrasena = txtContrasena.getText();
+            TipoUsuario tipoUsuario = ((ModeloCbTipoUsuario)cbTipoUsuario.getModel()).getElementAt(cbTipoUsuario.getSelectedIndex());
+            return new Usuario(nombre, contrasena, tipoUsuario);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;

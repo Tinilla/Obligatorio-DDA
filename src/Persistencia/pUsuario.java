@@ -21,21 +21,21 @@ public class pUsuario extends MySql implements IABM<Usuario>, IUsuario{
 
     @Override
     public boolean alta(Usuario objeto) {
-        strSQL = "INSERT INTO `usuario` (`nombreUsuario`, `contrasena`, `idTipoUsuario`) VALUES("+objeto.getNombreUsuario()+","+objeto.getContrasena()+","+objeto.getTipo().getId()+")";
+        strSQL = "INSERT INTO `usuario` (`nombreUsuario`, `contrasena`, `idTipoUsuario`, `estado`) VALUES('"+objeto.getNombreUsuario()+"','"+objeto.getContrasena()+"',"+objeto.getTipo().getId()+", 1)";
         update();
         return true;
     }
 
     @Override
     public boolean baja(int id) {
-        strSQL = "DELETE FROM `usuario` WHERE `id` = " + id;
+        strSQL = "UPDATE `usuario` SET `estado` = 0 WHERE `id` = " + id;
         update();
         return true;
     }
 
     @Override
     public boolean modificar(Usuario objeto) {
-        strSQL = "UPDATE `usuario` SET `nombreUsuario` = "+objeto.getNombreUsuario()+", `contrasena` = "+objeto.getContrasena()+", `idTipoUsuario` = " + objeto.getTipo().getId();
+        strSQL = "UPDATE `usuario` SET `nombreUsuario` = '"+objeto.getNombreUsuario()+"', `contrasena` = '"+objeto.getContrasena()+"', `idTipoUsuario` = " + objeto.getTipo().getId() + " WHERE `id` = " +objeto.getId();
         update();
         return true;
     }
