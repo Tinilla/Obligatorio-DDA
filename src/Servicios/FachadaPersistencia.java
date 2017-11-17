@@ -90,4 +90,7 @@ public class FachadaPersistencia {
         return tanqueABM.buscar(idTanque);
     }
     
+    public List<TipoUsuario> listarTiposUsuario(String criterio){
+        return tipoUsuarioBL.listar();
+    }
 }

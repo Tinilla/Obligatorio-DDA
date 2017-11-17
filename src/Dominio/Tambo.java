@@ -70,5 +70,7 @@ public class Tambo {
         return persistencia.buscarTanque(idTanque);
     }
     
-    
+    public List<TipoUsuario> listarTiposUsuario(String criterio){
+        return persistencia.listarTiposUsuario(criterio);
+    }
 }

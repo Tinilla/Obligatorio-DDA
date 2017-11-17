@@ -34,24 +34,29 @@ public class ManejoUsuarios extends javax.swing.JFrame {
     /**
      * Creates new form ManejoUsuarios
      */
-    public ManejoUsuarios(Usuario usuario) {
+    private ManejoUsuarios(Usuario usuario) {
         initComponents();
+        usuarioLogueado = usuario;
         controladora = Tambo.getInstancia();
         verificarPermisos();
         cargarTabla();
         lsmUsuarios = tblUsuarios.getSelectionModel();
         lsmUsuarios.addListSelectionListener(new ListenerUsuario());
         tblUsuarios.setSelectionModel(lsmUsuarios);
+        
         //this.rbgTipoMostrar.setSelected(rbEncargadosPlanta, true);
         //cargarTabla();
     }
     
-    private boolean esMaster(){
-        return usuarioLogueado.getTipo().getNombre().equals("Administrador");
+    public static ManejoUsuarios getInstancia(Usuario usuario){
+        if(instancia == null){
+            instancia = new ManejoUsuarios(usuario);
+        }
+        return instancia;
     }
     
     private void verificarPermisos(){
-        if(!esMaster()){
+        if(!usuarioLogueado.esMaster()){
             this.rbAdministradores.setEnabled(false);
         }
         cargarTiposUsuario();
@@ -59,7 +64,7 @@ public class ManejoUsuarios extends javax.swing.JFrame {
     
     private void cargarTiposUsuario(){
         String criterio = "todos";
-        if(!esMaster()){
+        if(!usuarioLogueado.esMaster()){
             criterio = "encargados";
         }
         ModeloCbTipoUsuario tipos = new ModeloCbTipoUsuario(controladora.listarTiposUsuario(criterio));
@@ -82,7 +87,7 @@ public class ManejoUsuarios extends javax.swing.JFrame {
         if(rbAdministradores.isSelected()){
             criterio = "administradores";
         }
-        List<Usuario> usuarios = controladora.listarUsuarios(criterio);
+        List<Usuario> usuarios = controladora.listarUsuarios();
         modeloTabla = new ModeloTblUsuario(usuarios);
         tblUsuarios.setModel(modeloTabla);
     }
@@ -94,6 +99,8 @@ public class ManejoUsuarios extends javax.swing.JFrame {
             if (seleccion != -1) {
                 usuarioSeleccionado = modeloTabla.getUsuario(seleccion);
                 cargarDatosUsuario();
+                btnModificar.setEnabled(true);
+                btnEliminar.setEnabled(true);
             }
         }
     }
