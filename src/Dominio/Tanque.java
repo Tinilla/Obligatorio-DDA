@@ -60,6 +60,13 @@ public class Tanque {
         this.id = id;
     }
     
+    public Tanque(Integer numero, Integer volumen, Categoria categoria) {
+        this.numero = numero;
+        this.volumen = volumen;
+        this.stock = 0;
+        this.categoria = categoria;
+    }
+    
     public Tanque(Integer numero, Integer volumen, Integer stock, Categoria categoria) {
         this.numero = numero;
         this.volumen = volumen;

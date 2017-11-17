@@ -15,8 +15,8 @@ import javax.swing.ComboBoxModel;
  * @author Equipo
  */
 public class ModeloCbCategoria extends AbstractListModel<Categoria> implements ComboBoxModel<Categoria>{
-    private static List<Categoria> categorias;
-    private static Object categoriaSeleccionada;
+    private List<Categoria> categorias;
+    private Object categoriaSeleccionada;
 
     @Override
     public int getSize() {

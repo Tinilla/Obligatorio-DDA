@@ -15,8 +15,8 @@ import javax.swing.ComboBoxModel;
  * @author Negro
  */
 public class ModeloCbCiudad extends AbstractListModel<Ciudad> implements ComboBoxModel<Ciudad>{
-    private static List<Ciudad> ciudades;
-    private static Object categoriaSeleccionada;
+    private List<Ciudad> ciudades;
+    private Object categoriaSeleccionada;
     
    @Override
     public int getSize() {

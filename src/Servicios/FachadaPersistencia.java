@@ -5,11 +5,13 @@
  */
 package Servicios;
 
+import Dominio.Categoria;
 import Dominio.Ciudad;
 import Dominio.Cliente;
 import Dominio.Tanque;
 import Dominio.TipoUsuario;
 import Dominio.Usuario;
+import Persistencia.pCategoria;
 import Persistencia.pCiudad;
 import Persistencia.pCliente;
 import Persistencia.pTanque;
@@ -28,6 +30,7 @@ public class FachadaPersistencia {
     private static IBuscarListar<Ciudad> ciudadABM;
     
     
+    private static IBuscarListar<Categoria> categoriaBL;   
     private static IBuscarListar<TipoUsuario> tipoUsuarioBL;
     
     private static IUsuario usuario;
@@ -41,6 +44,7 @@ public class FachadaPersistencia {
         usuario = new pUsuario();
         clienteABM = new pCliente();
         ciudadABM = new pCiudad();
+        categoriaBL = new pCategoria();
     }
     
     public static FachadaPersistencia getInstancia(){
@@ -117,5 +121,9 @@ public class FachadaPersistencia {
     
     public void bajaCliente(int idCliente){
         clienteABM.baja(idCliente);
+    }
+    
+    public List<Categoria> listarCategorias(){
+        return categoriaBL.listar();
     }
 }

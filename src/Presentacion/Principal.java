@@ -67,6 +67,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu2.setText("Tanques");
 
         jMenuItem2.setText("Gestionar tanques");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem2);
 
         jMenuItem3.setText("Controlar stock");
@@ -110,6 +115,11 @@ public class Principal extends javax.swing.JFrame {
         ManejoUsuarios ventana = ManejoUsuarios.getInstancia(usuarioLogueado);
         ventana.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        ManejoTanques ventana = ManejoTanques.getInstancia();
+        ventana.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;

@@ -5,17 +5,84 @@
  */
 package Presentacion;
 
+import Dominio.Categoria;
+import Dominio.Tambo;
+import Dominio.Tanque;
+import Presentacion.ModelosCbox.ModeloCbCategoria;
+import Presentacion.ModelosTbl.ModeloTblTanque;
+import static java.awt.image.ImageObserver.ABORT;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 /**
  *
  * @author Equipo
  */
 public class ManejoTanques extends javax.swing.JFrame {
-
+    private static ManejoTanques instancia;
+    private static Tambo controladora;
+    
+    private static List<Tanque> tanques;
+    
+    private static ModeloTblTanque modeloTabla;
+    private static Tanque tanqueSeleccionado;
+    private static ListSelectionModel lsmTanques;
+    
     /**
      * Creates new form ManejoTanques
      */
-    public ManejoTanques() {
+    private ManejoTanques() {
         initComponents();
+        controladora = Tambo.getInstancia();
+        cargarTabla();
+        lsmTanques = tblTanques.getSelectionModel();
+        lsmTanques.addListSelectionListener(new ListenerTanque());
+        tblTanques.setSelectionModel(lsmTanques);
+    }
+    
+    public static ManejoTanques getInstancia(){
+        if(instancia == null){
+            instancia = new ManejoTanques();
+        }
+        return instancia;
+    } 
+    
+    private boolean faltanDatos(){
+        return this.txtVolumen.getText().equals("") || this.txtNumeroTanque.getText().equals("") || this.cbCategoria.getSelectedIndex() == -1;
+    }
+    
+    private void cargarTabla(){
+        tanques = controladora.listarTanques();
+        modeloTabla = new ModeloTblTanque(tanques);
+        tblTanques.setModel(modeloTabla);
+    }
+    
+    private class ListenerTanque implements ListSelectionListener {
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            int seleccion = tblTanques.getSelectedRow();
+            if (seleccion != -1) {
+                tanqueSeleccionado = modeloTabla.getTanque(seleccion);
+                cargarDatosTanque();
+                btnModificar.setEnabled(true);
+                btnEliminar.setEnabled(true);
+            }
+        }
+    }
+    
+    private void cargarDatosTanque(){
+        this.txtNumeroTanque.setText(tanqueSeleccionado.getNumero().toString());
+        this.txtVolumen.setText(tanqueSeleccionado.getVolumen().toString());
+        this.cbCategoria.setSelectedItem(""); //ELEGIR EL TIPO
+    }
+    
+    private void cargarCategorias(){
+        ModeloCbCategoria tipos = new ModeloCbCategoria(controladora.listarCategorias());
+        this.cbCategoria.setModel(tipos);
+        this.cbCategoria.setSelectedIndex(-1);
     }
 
     /**
@@ -30,12 +97,9 @@ public class ManejoTanques extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
         btnRegistrar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
-        rbAdministradores = new javax.swing.JRadioButton();
-        rbEncargadosPlanta = new javax.swing.JRadioButton();
         jSeparator2 = new javax.swing.JSeparator();
-        jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblUsuarios = new javax.swing.JTable();
+        tblTanques = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
@@ -66,26 +130,9 @@ public class ManejoTanques extends javax.swing.JFrame {
         btnModificar.setText("Modificar");
         btnModificar.setEnabled(false);
 
-        rbAdministradores.setText("Administradores");
-        rbAdministradores.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbAdministradoresActionPerformed(evt);
-            }
-        });
-
-        rbEncargadosPlanta.setSelected(true);
-        rbEncargadosPlanta.setText("Encargados de planta");
-        rbEncargadosPlanta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rbEncargadosPlantaActionPerformed(evt);
-            }
-        });
-
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        jLabel5.setText("Mostrar:");
-
-        jScrollPane1.setViewportView(tblUsuarios);
+        jScrollPane1.setViewportView(tblTanques);
 
         jLabel1.setText("jLabel1");
 
@@ -124,16 +171,9 @@ public class ManejoTanques extends javax.swing.JFrame {
                                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(rbAdministradores)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(rbEncargadosPlanta))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(10, 10, 10)
-                                        .addComponent(jLabel5))
                                     .addComponent(btnModificar)
                                     .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 187, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -167,13 +207,7 @@ public class ManejoTanques extends javax.swing.JFrame {
                                         .addComponent(jLabel4))))
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnEliminar)
-                                .addGap(27, 27, 27)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(rbAdministradores)
-                                    .addComponent(rbEncargadosPlanta)))))
+                                .addComponent(btnEliminar))))
                     .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -189,20 +223,13 @@ public class ManejoTanques extends javax.swing.JFrame {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         if(!faltanDatos()){
-            String nombre = txtNumeroTanque.getText();
-            String contrasena = txtVolumen.getText();
-            TipoUsuario tipoUsuario = ((ModeloCbTipoUsuario)cbTipoUsuario.getModel()).getElementAt(cbTipoUsuario.getSelectedIndex());
-            Usuario elUsuario = new Usuario(nombre, contrasena, tipoUsuario);
+            int numero = Integer.valueOf(txtNumeroTanque.getText());
+            int volumen = Integer.valueOf(txtVolumen.getText());
+            Categoria categoria = ((ModeloCbCategoria)cbCategoria.getModel()).getElementAt(cbCategoria.getSelectedIndex());
+            Tanque elTanque = new Tanque(numero, volumen, categoria);
+            controladora.altaTanque(elTanque);
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
-
-    private void rbAdministradoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbAdministradoresActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rbAdministradoresActionPerformed
-
-    private void rbEncargadosPlantaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbEncargadosPlantaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rbEncargadosPlantaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;
@@ -213,13 +240,10 @@ public class ManejoTanques extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JRadioButton rbAdministradores;
-    private javax.swing.JRadioButton rbEncargadosPlanta;
-    private javax.swing.JTable tblUsuarios;
+    private javax.swing.JTable tblTanques;
     private javax.swing.JTextField txtNumeroTanque;
     private javax.swing.JTextField txtVolumen;
     // End of variables declaration//GEN-END:variables

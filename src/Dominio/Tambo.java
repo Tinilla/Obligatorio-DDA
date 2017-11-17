@@ -77,6 +77,10 @@ public class Tambo {
         return persistencia.listarCiudades();
     }
     
+    public List<Categoria> listarCategorias(){
+        return persistencia.listarCategorias();
+    }
+    
     public void altaCliente(Cliente elCliente){
         persistencia.altaCliente(elCliente);
     }

@@ -15,8 +15,8 @@ import javax.swing.ComboBoxModel;
  * @author Equipo
  */
 public class ModeloCbTipoUsuario extends AbstractListModel<TipoUsuario> implements ComboBoxModel<TipoUsuario>{
-    private static List<TipoUsuario> tipos;
-    private static Object usuarioSeleccionado;
+    private List<TipoUsuario> tipos;
+    private Object usuarioSeleccionado;
 
     @Override
     public int getSize() {
