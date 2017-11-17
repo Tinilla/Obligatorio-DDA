@@ -13,6 +13,14 @@ public class Ciudad {
     private Integer id;
     private String nombre;
 
+    public Ciudad(int aInt, String string) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Ciudad() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public Integer getId() {
         return id;
     }
