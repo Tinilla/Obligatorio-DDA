@@ -70,5 +70,20 @@ public class Tambo {
         return persistencia.buscarTanque(idTanque);
     }
     
+    public List<Ciudad> listarCiudades(){
+        return persistencia.listarCiudades();
+    }
+    
+    public void altaCliente(Cliente elCliente){
+        persistencia.altaCliente(elCliente);
+    }
+    
+    public void bajaCliente(int idCliente){
+        persistencia.bajaCliente(idCliente);
+    }
+    
+    public void modificarCliente(Cliente elCliente){
+        persistencia.modificarCliente(elCliente);
+    }
     
 }

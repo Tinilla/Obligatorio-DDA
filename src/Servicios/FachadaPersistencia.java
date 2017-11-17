@@ -5,9 +5,13 @@
  */
 package Servicios;
 
+import Dominio.Ciudad;
+import Dominio.Cliente;
 import Dominio.Tanque;
 import Dominio.TipoUsuario;
 import Dominio.Usuario;
+import Persistencia.pCiudad;
+import Persistencia.pCliente;
 import Persistencia.pTanque;
 import Persistencia.pTipoUsuario;
 import Persistencia.pUsuario;
@@ -20,6 +24,9 @@ import java.util.List;
 public class FachadaPersistencia {
     private static IABM<Tanque> tanqueABM;
     private static IABM<Usuario> usuarioABM;
+    private static IABM<Cliente> clienteABM;
+    private static IBuscarListar<Ciudad> ciudadABM;
+    
     
     private static IBuscarListar<TipoUsuario> tipoUsuarioBL;
     
@@ -32,6 +39,8 @@ public class FachadaPersistencia {
         usuarioABM = new pUsuario();
         tipoUsuarioBL = new pTipoUsuario();
         usuario = new pUsuario();
+        clienteABM = new pCliente();
+        ciudadABM = new pCiudad();
     }
     
     public static FachadaPersistencia getInstancia(){
@@ -90,4 +99,19 @@ public class FachadaPersistencia {
         return tanqueABM.buscar(idTanque);
     }
     
+    public List<Ciudad> listarCiudades(){
+        return ciudadABM.listar();
+    }
+    
+    public void altaCliente(Cliente elCliente){
+        clienteABM.alta(elCliente);
+    }
+    
+    public void modificarCliente(Cliente elCliente){
+        clienteABM.modificar(elCliente);
+    }
+    
+    public void bajaCliente(int idCliente){
+        clienteABM.baja(idCliente);
+    }
 }

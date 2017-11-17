@@ -7,6 +7,8 @@ package Presentacion;
 
 import Dominio.Ciudad;
 import Dominio.Cliente;
+import Dominio.Tambo;
+import Presentacion.ModelosCbox.ModeloCbCiudad;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -15,12 +17,15 @@ import java.util.ArrayList;
  * @author Negro
  */
 public class ManejoClientes extends javax.swing.JFrame {
-
+    private static Tambo controladora;
+    
     /**
      * Creates new form ManejoClientes
      */
-    public ManejoClientes() {
+    public ManejoClientes() throws SQLException {
         initComponents();
+        controladora = Tambo.getInstancia();
+        cargarDdlCiudad();
     }
 
     /**
@@ -38,7 +43,7 @@ public class ManejoClientes extends javax.swing.JFrame {
         btnAgregarNuevo = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnGuardarCambios = new javax.swing.JButton();
-        ddlCiudad = new javax.swing.JComboBox<>();
+        ddlCiudad = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblClientes = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -58,7 +63,7 @@ public class ManejoClientes extends javax.swing.JFrame {
 
         btnGuardarCambios.setText("Guardar Cambios");
 
-        ddlCiudad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ddlCiudad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         tblClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -159,12 +164,9 @@ public class ManejoClientes extends javax.swing.JFrame {
         return txtNombre.getText().equals("") || txtRazonSocial.getText().equals("")|| txtRut.getText().equals("");
     }
     private void cargarDdlCiudad() throws SQLException{
-        ArrayList<Ciudad> listaCiudades;
-        /*
-        listaTrabajos = controladora.listarTrabajos();
-        for(Trabajo trabajo:listaTrabajos){
-            ddlTrabajos.addItem(trabajo.getTipo());
-        }*/
+        ModeloCbCiudad ciudades = new ModeloCbCiudad(controladora.listarCiudades());
+        this.ddlCiudad.setModel(ciudades);
+        this.ddlCiudad.setSelectedIndex(-1);
     }
     /**
      * @param args the command line arguments
@@ -203,11 +205,9 @@ public class ManejoClientes extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarNuevo;
-    private javax.swing.JButton btnAltaCliente;
-    private javax.swing.JButton btnAltaCliente1;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardarCambios;
-    private javax.swing.JComboBox<String> ddlCiudad;
+    private javax.swing.JComboBox ddlCiudad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
