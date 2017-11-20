@@ -9,6 +9,7 @@ import Dominio.Usuario;
 import Presentacion.Graficos.GraficoBarras;
 import Presentacion.Graficos.GraficoPuntos;
 import Presentacion.Graficos.GraficoTorta;
+import java.sql.SQLException;
 
 /**
  *
@@ -48,7 +49,9 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        jMenu7 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
+        jMenu8 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
@@ -86,9 +89,27 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Vacas");
+        jMenu3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu3ActionPerformed(evt);
+            }
+        });
+
+        jMenu7.setText("Gestionar vacas");
+        jMenu3.add(jMenu7);
+
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Clientes");
+
+        jMenu8.setText("Gestionar clientes");
+        jMenu8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu8ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenu8);
+
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("Estadísticas");
@@ -154,15 +175,11 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        GraficoTorta demo = new GraficoTorta("coso", "cosito");
-        demo.pack();
-        demo.setVisible(true);
+        //
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        GraficoBarras demo = new GraficoBarras("coso", "coooso");
-        demo.pack();
-        demo.setVisible(true);
+        //
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
@@ -171,6 +188,26 @@ public class Principal extends javax.swing.JFrame {
         demo.setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
+    private void jMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu3ActionPerformed
+        ManejoVacas ventana;
+        try {   
+            ventana = ManejoVacas.getInstancia(usuarioLogueado);
+            ventana.setVisible(true);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenu3ActionPerformed
+
+    private void jMenu8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu8ActionPerformed
+        ManejoClientes ventana;
+        try {   
+            ventana = ManejoClientes.getInstancia(usuarioLogueado);
+            ventana.setVisible(true);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenu8ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -178,6 +215,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
+    private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;

@@ -56,4 +56,8 @@ public class Cliente {
         this.ciudad = ciudad;
     }
     
+    @Override
+    public String toString() {
+        return "Cliente{" + "id=" + id + ", nombre=" + nombre + ", razonSocial=" + razonSocial + ", rut=" + rut + ", ciudad=" + ciudad + '}';
+    }
 }

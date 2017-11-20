@@ -5,6 +5,7 @@
  */
 package Persistencia;
 
+import Dominio.Ciudad;
 import Dominio.Cliente;
 import Servicios.*;
 import java.sql.SQLException;
@@ -21,7 +22,7 @@ public class pCliente extends MySql implements IABM<Cliente>, IBuscarListar<Clie
 
     @Override
     public boolean alta(Cliente objeto) {
-        strSQL = "INSERT INTO cliente (nombre, razonSocial, rut, idCiudad) VALUES ('"+objeto.getNombre()+"', '"+objeto.getRazonSocial()+"', '"+objeto.getRut()+"', '"+objeto.getCiudad().getId()+"')";
+        strSQL = "INSERT INTO cliente (nombre, razonSocial, rut, idCiudad, estado) VALUES ('"+objeto.getNombre()+"', '"+objeto.getRazonSocial()+"', '"+objeto.getRut()+"', '"+objeto.getCiudad().getId()+"', 1)";
         update();
         return true;
     }
@@ -35,7 +36,7 @@ public class pCliente extends MySql implements IABM<Cliente>, IBuscarListar<Clie
 
     @Override
     public boolean modificar(Cliente objeto) {
-        strSQL = "UPDATE cliente SET nombre = '"+objeto.getNombre()+"', razonSocial = '"+objeto.getRazonSocial()+"', rut = '"+objeto.getRut()+"', idCiudad = '" + objeto.getCiudad().getId()+"'WHERE id = " + objeto.getId();
+        strSQL = "UPDATE cliente SET nombre = '"+objeto.getNombre()+"', razonSocial = '"+objeto.getRazonSocial()+"', rut = '"+objeto.getRut()+"' WHERE id = " + objeto.getId();
         update();
         return true;
     }
@@ -43,15 +44,16 @@ public class pCliente extends MySql implements IABM<Cliente>, IBuscarListar<Clie
     @Override
     public List<Cliente> listar(){
         ArrayList<Cliente> listaClientes = new ArrayList<>();
-        strSQL = "SELCT nombre, razonSocial, rut FROM cliente ";
+        strSQL = "SELECT id, nombre, razonSocial, rut FROM cliente WHERE estado = 1";
         seleccionar();
         Cliente cliente;
         try {
             while(rs.next()){
                 cliente = new Cliente(); 
+                cliente.setId(rs.getInt("id"));
                 cliente.setNombre(rs.getString("nombre"));
-                cliente.setNombre(rs.getString("razonSocial"));
-                cliente.setNombre(rs.getString("rut"));
+                cliente.setRazonSocial(rs.getString("razonSocial"));
+                cliente.setRut(rs.getString("rut"));
                 listaClientes.add(cliente);
             }
         } catch (SQLException ex) {
@@ -61,15 +63,20 @@ public class pCliente extends MySql implements IABM<Cliente>, IBuscarListar<Clie
     }
 
     @Override
-    public Cliente buscar(int id) {
-        Cliente cliente = new Cliente();
-        strSQL = "SELECT nombre, razonSocial, ruta FROM cliente WHERE cliente.id = " + id;
+    public Cliente buscar(int rut) {
+        Cliente cliente = null;
+        Ciudad ciudad;
+        strSQL = "SELECT nombre, razonSocial, rut, idCiudad FROM cliente WHERE cliente.rut = " + rut;
         seleccionar();
         try {
             if(rs.next()){
+                cliente = new Cliente();
+                ciudad = new Ciudad();
                 cliente.setNombre(rs.getString("nombre"));
-                cliente.setNombre(rs.getString("razonSocial"));
-                cliente.setNombre(rs.getString("rut"));
+                cliente.setRazonSocial(rs.getString("razonSocial"));
+                cliente.setRut(rs.getString("rut"));
+                ciudad.setId(rs.getInt("idCiudad"));
+                cliente.setCiudad(ciudad);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

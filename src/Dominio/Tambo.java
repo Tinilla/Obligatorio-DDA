@@ -93,4 +93,34 @@ public class Tambo {
         persistencia.modificarCliente(elCliente);
     }
     
+    public Cliente buscarCliente(int rutCliente){
+        Cliente cliente;
+        cliente = persistencia.buscarCliente(rutCliente);
+        return cliente;
+    }
+    public List<Cliente> listarClientes(){
+        return persistencia.listarClientes();
+    }
+    public void altaVaca(Vaca vaca){
+        persistencia.altaVaca(vaca);
+    }
+    
+    public void bajaVaca(int caravanaVaca){
+        persistencia.bajaVaca(caravanaVaca);
+    }
+    
+    public void modificarVaca(Vaca vaca){
+        persistencia.modificarVaca(vaca);
+    }
+    public Vaca buscarVaca(int caravanaVaca){
+        Vaca vaca;
+        vaca = persistencia.buscarVaca(caravanaVaca);
+        return vaca;
+    }
+    public List<Vaca> listarVacas(){
+        return persistencia.listarVacas();
+    }
+    public List<Raza> listarRazas(){
+        return persistencia.listarRazas();
+    }
 }
