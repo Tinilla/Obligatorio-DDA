@@ -123,4 +123,16 @@ public class Tambo {
     public List<Raza> listarRazas(){
         return persistencia.listarRazas();
     }
+    
+    public int pesoPromedioA(){
+        return 0;
+    }
+    
+    public int pesoPromedioB(){
+        return 0;
+    }
+    
+    public int pesoPromedioC(){
+        return 0;
+    }
 }

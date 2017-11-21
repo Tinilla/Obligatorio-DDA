@@ -10,10 +10,22 @@ package Dominio;
  * @author Equipo
  */
 public class CalculoPrecioB implements ICalculoPrecio{
-
+    private static int porCostoCuidados = 3;
+    private static int porCostoAlimentacion = 10;
+    private static int porCostoAdicional = 1;
+    private static int resta = 5;
+    private static CalculoPrecioB instancia;
     @Override
     public int calcularPrecioLeche(int costoNeto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int suma = costoNeto;
+        int peso = Tambo.getInstancia().pesoPromedioB();
+        suma += costoNeto * porCostoCuidados / 100;
+        suma += costoNeto * porCostoAlimentacion /100;
+        suma += peso * porCostoAdicional / 100;
+        if(peso < 600){
+            suma = suma - (suma * resta / 100);
+        }
+        return suma;
     }
     
 }

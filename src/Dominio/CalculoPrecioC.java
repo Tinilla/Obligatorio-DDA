@@ -4,16 +4,23 @@
  * and open the template in the editor.
  */
 package Dominio;
-
 /**
  *
  * @author Equipo
  */
 public class CalculoPrecioC implements ICalculoPrecio{
-
+    private static int porCostoCuidadosAlimentacion = 12;
+    private static int resta = 5;
+    private static CalculoPrecioC instancia;
     @Override
     public int calcularPrecioLeche(int costoNeto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int suma = costoNeto;
+        suma += costoNeto * porCostoCuidadosAlimentacion / 100;
+        int peso = Tambo.getInstancia().pesoPromedioC();
+        if(peso < 650){
+            suma = suma - (suma * 5 / 100);
+        }
+        return suma;
     }
     
 }

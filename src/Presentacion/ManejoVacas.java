@@ -385,12 +385,6 @@ public class ManejoVacas extends javax.swing.JFrame {
         this.ddlCategoria.setSelectedItem(ABORT);
         this.ddlRaza.setSelectedItem(ABORT); //ELEGIR EL TIPO
     }
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarNuevo;
     private javax.swing.JButton btnCancelar;

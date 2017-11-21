@@ -13,7 +13,6 @@ public class CalculoPrecioA implements ICalculoPrecio{
     private static int porCostoCuidados = 5;
     private static int porCostoAlimentacion = 15;
     private static int porCostoAdicional = 2;
-    private static int promedioUltimasVacas;
     private static CalculoPrecioA instancia;
     
     private CalculoPrecioA(){
@@ -24,14 +23,15 @@ public class CalculoPrecioA implements ICalculoPrecio{
         instancia = new CalculoPrecioA();
         return instancia;
     }
-    
-    public
+
     @Override
     public int calcularPrecioLeche(int costoNeto) {
         int suma = costoNeto;
+        int pesoPromedio = Tambo.getInstancia().pesoPromedioA();
         suma += costoNeto * porCostoCuidados / 100;
         suma += costoNeto * porCostoAlimentacion / 100;
-        
+        suma += pesoPromedio * porCostoAdicional / 100;
+        return suma;
     }
     
 }
